@@ -1,7 +1,7 @@
 {
-  "name": "chat-app",
-  "version": "1.0.0",
-  "description": "Chat App",
+  "name": "parla-chat",
+  "version": "0.1.0",
+  "description": "Chat App built with Node.js, Express.js and Socket.IO",
   "main": "index.js",
   "scripts": {
     "test": "",
