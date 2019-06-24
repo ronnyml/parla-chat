@@ -5,6 +5,7 @@ const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser, getUser, getUsersInRoom, removeUser } = require('./utils/users')
+const { getRooms } = require('./utils/rooms')
 
 const app = express()
 const server = http.createServer(app)
@@ -30,7 +31,7 @@ io.on('connection', (socket) => {
     socket.emit('message', generateMessage(ADMIN_USER, 'Welcome!'))
     socket.broadcast.to(user.room).emit('message', generateMessage(ADMIN_USER, `${user.username} has joined!`))
     io.to(user.room).emit('roomData', {
-      room: user.room,
+      rooms: getRooms(),
       users: getUsersInRoom(user.room)
     })
     callback()
@@ -59,7 +60,7 @@ io.on('connection', (socket) => {
     if (user) {
       io.to(user.room).emit('message', generateMessage(ADMIN_USER, `${user.username} has left!`))
       io.to(user.room).emit('roomData', {
-        room: user.room,
+        rooms: getRooms(),
         users: getUsersInRoom(user.room)
       })
     }

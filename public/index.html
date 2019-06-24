@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Chat App</title>
+      <title>Parla Chat</title>
       <link rel="icon" href="/img/favicon.png">
       <link rel="stylesheet" href="/css/styles.min.css">
     </head>
@@ -11,7 +11,13 @@
               <h1>Join</h1>
               <form action="/chat.html">
                   <input type="text" name="username" placeholder="Display name" required>
-                  <input type="text" name="room" placeholder="Room" required>
+                  <select name="room" required>
+                    <option>Announcements</option>
+                    <option>General</option>
+                    <option>Movies</option>
+                    <option>Programming</option>
+                    <option>Reading</option>
+                  </select>
                   <button>Join</button>
               </form>
             </div>
