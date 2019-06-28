@@ -9,16 +9,15 @@
         <div class="chat">
           <div id="sidebar" class="chat__sidebar">
           </div>
-          
           <div class="chat__main">
-                <div id="messages" class="chat__messages"></div>
-                <div class="compose">
-                    <form id="message-form">
-                        <input placeholder="Message" type="text" name="message" required autocomplete="off">
-                        <button>Send</button>
-                    </form>
-                    <button id="send-location">Send Location</button>
-                </div>
+            <div id="messages" class="chat__messages"></div>
+            <div class="compose">
+                <form id="message-form">
+                    <input placeholder="Message" type="text" name="message" required autocomplete="off">
+                    <button>Send</button>
+                </form>
+                <button id="send-location">Send Location</button>
+            </div>
           </div>
         </div>
 
@@ -47,10 +46,15 @@
             <h3 class="list-title">Rooms</h3>
             <ul class="users">
                 {{ #rooms }}
-                  <li><a href="chat.html?username={{ username }}&room={{ room }}" class="room-link"># {{ room }}</a></li>
+                  {{#inuse}}
+                    <li class="room-used"># {{ room }}</li>
+                  {{/inuse}}
+                  {{^inuse}}
+                    <li class="room"><a href="chat.html?username={{ username }}&room={{ room }}"># {{ room }}</a></li>
+                  {{/inuse}}
                 {{ /rooms }}
             </ul>
-            <h3 class="list-title">Users</h3>
+            <h3 class="list-title">People</h3>
             <ul class="users">
                 {{ #users }}
                   <li>{{ username }}</li>

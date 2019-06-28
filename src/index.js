@@ -20,7 +20,6 @@ app.use(express.static(publicDirPath))
 
 io.on('connection', (socket) => {
   console.log('New WebSocket connection')
- 
   socket.on('join', ({ username, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, username, room })
     if (error) {
@@ -30,8 +29,9 @@ io.on('connection', (socket) => {
     socket.join(user.room)
     socket.emit('message', generateMessage(ADMIN_USER, 'Welcome!'))
     socket.broadcast.to(user.room).emit('message', generateMessage(ADMIN_USER, `${user.username} has joined!`))
+    room = room.trim().toLowerCase()
     io.to(user.room).emit('roomData', {
-      rooms: getRooms(),
+      rooms: getRooms(room),
       users: getUsersInRoom(user.room)
     })
     callback()
@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
   socket.on('sendMessage', (message, callback) => {
     const filter = new Filter()
     if (filter.isProfane(message)) {
-      return callback('Profanity is not allowed!')
+      return callback('Profanity is not allowed')
     }
 
     const user = getUser(socket.id)
@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
     if (user) {
       io.to(user.room).emit('message', generateMessage(ADMIN_USER, `${user.username} has left!`))
       io.to(user.room).emit('roomData', {
-        rooms: getRooms(),
+        rooms: getRooms(user.room),
         users: getUsersInRoom(user.room)
       })
     }
@@ -68,5 +68,5 @@ io.on('connection', (socket) => {
 })
 
 server.listen(port, () => {
-    console.log(`Server is up on Port ${port}`);
+  console.log(`Server is up on Port ${port}`)
 })
