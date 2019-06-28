@@ -1,16 +1,18 @@
 const socket = io()
 
 // Elements
+const $header = document.querySelector('#header')
 const $messageForm = document.querySelector('#message-form')
 const $messageFormInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
-const $sendLocationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
+const $sendLocationButton = document.querySelector('#send-location')
 const $sidebar = document.querySelector('#sidebar')
 
 // Templates
-const messageTemplate = document.querySelector('#message-template').innerHTML
+const headerTemplate = document.querySelector('#header-template').innerHTML
 const locationTemplate = document.querySelector('#location-template').innerHTML
+const messageTemplate = document.querySelector('#message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 // Options
@@ -55,12 +57,16 @@ socket.on('locationMessage', (message) => {
 })
 
 socket.on('roomData', ({ rooms, users }) => {
-  const html = Mustache.render(sidebarTemplate, {
+  const siderbarHTML = Mustache.render(sidebarTemplate, {
     rooms,
     users,
     username
   })
-  $sidebar.innerHTML = html
+  const headerHTML = Mustache.render(headerTemplate, {
+    room
+  })
+  $sidebar.innerHTML = siderbarHTML
+  $header.innerHTML = headerHTML
 })
 
 $messageForm.addEventListener('submit', (e) => {

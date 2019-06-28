@@ -10,6 +10,7 @@
           <div id="sidebar" class="chat__sidebar">
           </div>
           <div class="chat__main">
+            <div id="header"></div>
             <div id="messages" class="chat__messages"></div>
             <div class="compose">
                 <form id="message-form">
@@ -20,6 +21,9 @@
             </div>
           </div>
         </div>
+        <script id="header-template" type="text/html">
+          <h2 class="header"># {{ room }}</h2>
+        </script>
 
         <script id="message-template" type="text/html">
             <div class="message">
